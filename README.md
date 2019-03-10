@@ -33,6 +33,13 @@ cmake ../maps_headless
 make -j12
 
 ```
+Run:
+```
+example_maps_headless/example_maps_headless 
+ls output.png 
+
+```
+
 
 ## QMake Build Instructions
 To build and deploy the application using QtCreator perform the following steps.
