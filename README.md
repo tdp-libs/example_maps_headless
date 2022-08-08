@@ -6,18 +6,18 @@ The program should create output.png in the directory that it is run in.
 ![Output](images/output.png)
 
 ## Prerequisites 
-* tdp_tools [Installation instructions](https://github.com/tdp-libs/tdp_tools)
-* A toolchain for your chosen platform. [Installation instructions](https://github.com/tdp-libs/tdp_build)
+* tp_tools [Installation instructions](https://github.com/tp-libs/tp_tools)
+* A toolchain for your chosen platform. [Installation instructions](https://github.com/tp-libs/tp_build)
 
 ## Clone Instructions
-These steps will clone the repo and all of its dependencies. You will need [tdp_tools](https://github.com/tdp-libs/tdp_tools) in your path for this to work.
+These steps will clone the repo and all of its dependencies. You will need [tp_tools](https://github.com/tp-libs/tp_tools) in your path for this to work.
 ```
 mkdir maps_headless
 cd maps_headless
-git clone https://github.com/tdp-libs/example_maps_headless.git
+git clone https://github.com/tp-libs/example_maps_headless.git
 cp example_maps_headless/maps_headless.pro .
 cp example_maps_headless/CMakeLists.top CMakeLists.txt
-tdpUpdate
+tpUpdate
 
 ```
 
