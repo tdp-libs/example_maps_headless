@@ -4,6 +4,7 @@ SUBDIRS += lib_json
 SUBDIRS += lib_base64
 SUBDIRS += lib_earcut
 SUBDIRS += lib_clipper
+SUBDIRS += lib_nanoflann
 
 SUBDIRS += tp_utils
 SUBDIRS += tp_triangulation

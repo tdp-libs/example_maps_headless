@@ -1,4 +1,4 @@
-#include "example_maps_headless/Globals.h"
+#include "example_maps_headless/Globals.h" // IWYU pragma: keep
 
 #include "tp_maps_headless/Map.h"
 
@@ -21,6 +21,15 @@ int main()
   tp_maps_headless::Map map(true);
   map.setBackgroundColor({0.0f, 0.0f, 0.0f});
 
+  std::vector<tp_math_utils::Light> lights = map.lights();
+  for(auto& light : lights)
+  {
+    light.diffuseScale = 14.0f;
+    light.ambient = {1.0f, 1.0f, 1.0f};
+  }
+  map.setLights(lights);
+
+
   //Create a shpere model.
   addSphere(&map);
 
@@ -39,24 +48,22 @@ int main()
 //##################################################################################################
 void addSphere(tp_maps::Map* map)
 {
-  tp_maps::Geometry3D geometry;
+  tp_math_utils::Geometry3D geometry;
 
   //Material to color the sphere with.
-  geometry.material.ambient   = {0.1f, 0.4f, 0.2f};
-  geometry.material.diffuse   = {0.5f, 1.0f, 0.1f};
-  geometry.material.specular  = {0.3f, 0.3f, 0.3f};
-  geometry.material.shininess = 32.0f;
+  geometry.material.albedo   = {0.1f, 0.4f, 0.2f};
+  geometry.material.specular  = 0.3f;
 
   //Create the mesh for the sphere.
-  geometry.geometry.triangles = GL_TRIANGLES;
-  auto& indexes = geometry.geometry.indexes.emplace_back();
-  indexes.type = geometry.geometry.triangles;
+  geometry.triangles = GL_TRIANGLES;
+  auto& indexes = geometry.indexes.emplace_back();
+  indexes.type = geometry.triangles;
 
   int stride = 6;
   float radius = 10;
   auto addVert = [&](float x, float y, float z)
   {
-    geometry.geometry.verts.emplace_back().vert = {x*radius, y*radius, z*radius};
+    geometry.verts.emplace_back().vert = {x*radius, y*radius, z*radius};
   };
 
   for(int i=0; i<180; i+=stride)
@@ -78,18 +85,18 @@ void addSphere(tp_maps::Map* map)
       addVert(x1*d1, y1*d1, z1); // -2
       addVert(x1*d0, y1*d0, z0); // -1
 
-      indexes.indexes.push_back(int(geometry.geometry.verts.size()-4));
-      indexes.indexes.push_back(int(geometry.geometry.verts.size()-3));
-      indexes.indexes.push_back(int(geometry.geometry.verts.size()-2));
+      indexes.indexes.push_back(int(geometry.verts.size()-4));
+      indexes.indexes.push_back(int(geometry.verts.size()-3));
+      indexes.indexes.push_back(int(geometry.verts.size()-2));
 
-      indexes.indexes.push_back(int(geometry.geometry.verts.size()-4));
-      indexes.indexes.push_back(int(geometry.geometry.verts.size()-2));
-      indexes.indexes.push_back(int(geometry.geometry.verts.size()-1));
+      indexes.indexes.push_back(int(geometry.verts.size()-4));
+      indexes.indexes.push_back(int(geometry.verts.size()-2));
+      indexes.indexes.push_back(int(geometry.verts.size()-1));
     }
   }
 
   //Calculate face normals to make lighting work.
-  geometry.geometry.calculateFaceNormals();
+  geometry.calculateFaceNormals();
 
   //Add the sphere to the 3D map.
   auto layer = new tp_maps::Geometry3DLayer();
